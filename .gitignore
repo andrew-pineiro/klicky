@@ -1,4 +1,8 @@
+# .NET things
 bin/
 obj/
 publish/
 *.csproj
+
+# Custom Build Script
+build.ps1
