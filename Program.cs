@@ -4,11 +4,17 @@
 int Seconds = 60;
 //default false
 bool Debug = false;
+
 void displayHelp(string err) {
     if(!string.IsNullOrEmpty(err)) {
         Console.WriteLine($"ERROR: {err}");
     }
     Console.WriteLine("Usage - .\\klicky.exe [--seconds/-S (num)] [--debug/-D]");
+}
+void writeDebug(string message) {
+    if(Debug) {
+        Console.WriteLine($"DEBUG: {message}");
+    }
 }
 void parseArgs() {
     for(int i = 0; i < args.Count(); i++) {
@@ -24,7 +30,7 @@ void parseArgs() {
                 } else {
                     displayHelp("expected number for --seconds");
                 }
-                if(Debug) { Console.WriteLine($"DEBUG: Seconds set to {args[i+1]} via argument");}
+                writeDebug($"DEBUG: Seconds set to {args[i+1]} via argument");
                 break;
         }
     }
@@ -34,11 +40,11 @@ parseArgs();
 Console.WriteLine($"+ Starting Klicky at {Seconds} second interval");
 while (true) {
     var interval = rnd.Next(Seconds)*1000;
-    if(Debug) { Console.WriteLine($"DEBUG: Sleeping for {interval/1000} seconds ({interval} milliseconds)"); }
+    writeDebug($"Sleeping for {interval/1000} seconds ({interval} milliseconds)");
     
     Thread.Sleep(rnd.Next(interval));
 
     Mouse.SimulateMouseClick();
-    if(Debug) { Console.WriteLine("DEBUG: Mouse Clicked"); }
+    writeDebug("Mouse Clicked");
     
 }
