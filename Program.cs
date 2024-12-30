@@ -4,7 +4,6 @@
 int Seconds = 60;
 //default false
 bool Debug = false;
-
 void displayHelp(string err) {
     if(!string.IsNullOrEmpty(err)) {
         Console.WriteLine($"ERROR: {err}");
@@ -43,8 +42,15 @@ while (true) {
     writeDebug($"Sleeping for {interval/1000} seconds ({interval} milliseconds)");
     
     Thread.Sleep(rnd.Next(interval));
-
-    Mouse.SimulateMouseClick();
+    if(OperatingSystem.IsWindows()) {
+        Mouse.SimulateMouseClick();
+    } else if(OperatingSystem.IsLinux()) {
+        Console.WriteLine("Linux operating system not supported");
+        return;
+    } else if(OperatingSystem.IsMacOS()) {
+        Console.WriteLine("MacOS operating system not supported");
+        return;
+    }
     writeDebug("Mouse Clicked");
     
 }
